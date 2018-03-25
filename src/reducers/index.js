@@ -10,7 +10,7 @@ const initialState = {
   error: null,
 }
 
-export function rootReducer(state = initialState, action) {
+export default function rootReducer(state = initialState, action) {
   switch (action.type) {
     case API_CALL_REQUEST:
       return {
@@ -29,7 +29,7 @@ export function rootReducer(state = initialState, action) {
         ...state,
         fetching: false,
         dog: null,
-        error: action.error
+        error: action.error,
       }
     default:
       return state

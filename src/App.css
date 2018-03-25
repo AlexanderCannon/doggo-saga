@@ -4,12 +4,12 @@
 
 .App-logo {
   height: 90%;
-  box-shadow: -2px 2px 2px 1px rgba(97, 97, 97, 0.5);
+  box-shadow: -2px 2px 2px 1px rgba(57, 57, 57, 0.5);
   transition-duration: 0.3s;
   border-radius: 5px;
 }
 .App-logo:hover {
-  box-shadow: -2px 2px 4px 3px rgba(97, 97, 97, 0.5);
+  box-shadow: -2px 2px 4px 3px rgba(57, 57, 57, 0.5);
   transform: scale(1.02)
 }
 
@@ -35,10 +35,10 @@ button {
   line-height: 2rem;
   padding: 0.5rem;
   border-radius: 5px;
-  box-shadow: -2px 2px 2px 1px rgba(97, 97, 97, 0.5);
+  box-shadow: -2px 2px 2px 1px rgba(57, 57, 57, 0.5);
   transition-duration: 0.3s;
 }
 button:hover {
-  box-shadow: -2px 2px 4px 3px rgba(97, 97, 97, 0.5);
+  box-shadow: -2px 2px 4px 3px rgba(57, 57, 57, 0.5);
   transform: scale(1.02)
 }

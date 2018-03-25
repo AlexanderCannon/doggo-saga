@@ -1,13 +1,19 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import { API_CALL_REQUEST } from './constants/actions'
+
 import logo from './logo.svg'
 import './App.css'
 
-import { connect } from 'react-redux'
-import { API_CALL_REQUEST } from './constants/actions'
-
-class App extends Component {
+class App extends PureComponent {
   render() {
-    const { fetching, dog, onRequestDog, error } = this.props
+    const {
+      fetching,
+      dog,
+      onRequestDog,
+      error,
+    } = this.props
     return (
       <div className="App">
         <header className="App-header">
@@ -29,18 +35,28 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = ({ fetching, dog, error }) => {
-  return {
-    fetching,
-    dog,
-    error,
-  }
+App.propTypes = {
+  fetching: PropTypes.bool,
+  dog: PropTypes.string,
+  onRequestDog: PropTypes.func.isRequired,
+  error: PropTypes.string,
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onRequestDog: () => dispatch({ type: API_CALL_REQUEST })
-  }
+App.defaultProps = {
+  fetching: false,
+  dog: null,
+  error: null,
 }
+
+const mapStateToProps = ({ fetching, dog, error }) => ({
+  fetching,
+  dog,
+  error,
+})
+
+const mapDispatchToProps = dispatch => ({
+  onRequestDog: () => dispatch({ type: API_CALL_REQUEST }),
+})
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
