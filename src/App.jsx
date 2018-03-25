@@ -7,6 +7,9 @@ import logo from './logo.svg'
 import './App.css'
 
 class App extends PureComponent {
+  componentWillMount() {
+    this.props.onRequestDog()
+  }
   render() {
     const {
       fetching,
