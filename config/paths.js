@@ -1,5 +1,3 @@
-'use strict'
-
 const path = require('path')
 const fs = require('fs')
 const url = require('url')
@@ -9,19 +7,19 @@ const resolveApp = relativePath => path.resolve(appDirectory, relativePath)
 
 const envPublicUrl = process.env.PUBLIC_URL
 
-function ensureSlash(path, needsSlash) {
-  const hasSlash = path.endsWith('/')
+function ensureSlash(servedUrl, needsSlash) {
+  const hasSlash = servedUrl.endsWith('/')
   if (hasSlash && !needsSlash) {
-    return path.substr(path, path.length - 1)
-  } else if (!hasSlash && needsSlash) {
-    return `${path}/`
-  } else {
-    return path
+    return servedUrl.substr(servedUrl, servedUrl.length - 1)
   }
+  if (!hasSlash && needsSlash) {
+    return `${path}/`
+  }
+  return servedUrl
 }
 
 const getPublicUrl = appPackageJson =>
-  envPublicUrl || require(appPackageJson).homepage
+  envPublicUrl || require(appPackageJson).homepage // eslint-disable-line
 
 function getServedPath(appPackageJson) {
   const publicUrl = getPublicUrl(appPackageJson)

@@ -1,32 +1,25 @@
-'use strict'
-
 const fs = require('fs')
 const path = require('path')
 const paths = require('./paths')
 
 delete require.cache[require.resolve('./paths')]
 
-const NODE_ENV = process.env.NODE_ENV
+const { NODE_ENV } = process.env
 if (!NODE_ENV) {
-  throw new Error(
-    'The NODE_ENV environment variable is required but was not specified.'
-  )
+  throw new Error('The NODE_ENV environment variable is required but was not specified.')
 }
 
-var dotenvFiles = [
+const dotenvFiles = [
   `${paths.dotenv}.${NODE_ENV}.local`,
   `${paths.dotenv}.${NODE_ENV}`,
   NODE_ENV !== 'test' && `${paths.dotenv}.local`,
   paths.dotenv,
 ].filter(Boolean)
 
-dotenvFiles.forEach(dotenvFile => {
+dotenvFiles.forEach((dotenvFile) => {
   if (fs.existsSync(dotenvFile)) {
-    require('dotenv-expand')(
-      require('dotenv').config({
-        path: dotenvFile,
-      })
-    )
+    require('dotenv-expand')(require('dotenv') // eslint-disable-line
+      .config({ path: dotenvFile }))
   }
 })
 
@@ -44,17 +37,17 @@ function getClientEnvironment(publicUrl) {
     .filter(key => REACT_APP.test(key))
     .reduce(
       (env, key) => {
-        env[key] = process.env[key]
+        env[key] = process.env[key] // eslint-disable-line
         return env
       },
       {
         NODE_ENV: process.env.NODE_ENV || 'development',
         PUBLIC_URL: publicUrl,
-      }
+      },
     )
   const stringified = {
     'process.env': Object.keys(raw).reduce((env, key) => {
-      env[key] = JSON.stringify(raw[key])
+      env[key] = JSON.stringify(raw[key]) // eslint-disable-line
       return env
     }, {}),
   }

@@ -1,11 +1,7 @@
-'use strict'
-
 process.env.BABEL_ENV = 'development'
 process.env.NODE_ENV = 'development'
 
-process.on('unhandledRejection', err => {
-  throw err
-})
+process.on('unhandledRejection', err => { throw err }) // eslint-disable-line
 
 require('../config/env')
 
@@ -36,51 +32,50 @@ const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000
 const HOST = process.env.HOST || '0.0.0.0'
 
 if (process.env.HOST) {
-  console.log(
+  console.log( // eslint-disable-line
     `Attempting to bind to HOST environment variable: ${process.env.HOST}`,
-    `If this was unintentional, check that you haven't mistakenly set it in your shell.`,
-    `Learn more here: 'http:    '\n`
+    'If this was unintentional, check that you haven\'t mistakenly set it in your shell.',
   )
 }
 
 choosePort(HOST, DEFAULT_PORT)
-  .then(port => {
+  .then((port) => {
     if (port == null) {
-            return
+      return
     }
     const protocol = process.env.HTTPS === 'true' ? 'https' : 'http'
-    const appName = require(paths.appPackageJson).name
+    const appName = require(paths.appPackageJson).name // eslint-disable-line
     const urls = prepareUrls(protocol, HOST, port)
-        const compiler = createCompiler(webpack, config, appName, urls, useYarn)
-        const proxySetting = require(paths.appPackageJson).proxy
+    const compiler = createCompiler(webpack, config, appName, urls, useYarn)
+    const proxySetting = require(paths.appPackageJson).proxy // eslint-disable-line
     const proxyConfig = prepareProxy(proxySetting, paths.appPublic)
-        const serverConfig = createDevServerConfig(
+    const serverConfig = createDevServerConfig(
       proxyConfig,
-      urls.lanUrlForConfig
+      urls.lanUrlForConfig,
     )
     const devServer = new WebpackDevServer(compiler, serverConfig)
-        devServer.listen(port, HOST, err => {
+    devServer.listen(port, HOST, (err) => {
       if (err) {
-        return console.log(err)
+        return console.log(err) // eslint-disable-line
       }
       if (isInteractive) {
         clearConsole()
       }
-      console.log('Starting the development server...\n')
-      openBrowser(urls.localUrlForBrowser)
+      console.log('Starting the development server...\n') // eslint-disable-line
+      return openBrowser(urls.localUrlForBrowser)
     })
 
     const sigs = ['SIGINT', 'SIGTERM']
-    sigs.forEach(function (sig) {
-      process.on(sig, function () {
+    sigs.forEach((sig) => {
+      process.on(sig, () => {
         devServer.close()
         process.exit()
       })
     })
   })
-  .catch(err => {
+  .catch((err) => {
     if (err && err.message) {
-      console.log(err.message)
+      console.log(err.message) // eslint-disable-line
     }
     process.exit(1)
   })

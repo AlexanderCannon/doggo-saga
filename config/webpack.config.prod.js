@@ -1,5 +1,3 @@
-'use strict'
-
 const autoprefixer = require('autoprefixer')
 const path = require('path')
 const webpack = require('webpack')
@@ -37,19 +35,18 @@ module.exports = {
     path: paths.appBuild,
     filename: 'static/js/[name].[chunkhash:8].js',
     chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
-    publicPath: publicPath,
+    publicPath,
     devtoolModuleFilenameTemplate: info =>
       path
         .relative(paths.appSrc, info.absoluteResourcePath)
         .replace(/\\/g, '/'),
   },
   resolve: {
-    modules: ['node_modules', paths.appNodeModules].concat(
-      process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
-    ),
+    modules: ['node_modules', paths.appNodeModules]
+      .concat(process.env.NODE_PATH
+        .split(path.delimiter).filter(Boolean)),
     extensions: ['.web.js', '.mjs', '.js', '.json', '.web.jsx', '.jsx'],
     alias: {
-
       'react-native': 'react-native-web',
     },
     plugins: [
@@ -96,8 +93,8 @@ module.exports = {
           },
           {
             test: /\.css$/,
-            loader: ExtractTextPlugin.extract(
-              Object.assign(
+            loader: ExtractTextPlugin
+              .extract(Object.assign(
                 {
                   fallback: {
                     loader: require.resolve('style-loader'),
@@ -119,13 +116,14 @@ module.exports = {
                       options: {
                         ident: 'postcss',
                         plugins: () => [
-                          require('postcss-flexbugs-fixes'),
+                          require('postcss-flexbugs-fixes'), // eslint-disable-line
                           autoprefixer({
                             browsers: [
                               '>1%',
                               'last 4 versions',
                               'Firefox ESR',
-                              'not ie < 9',],
+                              'not ie < 9',
+                            ],
                             flexbox: 'no-2009',
                           }),
                         ],
@@ -133,9 +131,8 @@ module.exports = {
                     },
                   ],
                 },
-                extractTextPluginOptions
-              )
-            ),
+                extractTextPluginOptions,
+              )),
           },
           {
             loader: require.resolve('file-loader'),
@@ -197,10 +194,10 @@ module.exports = {
         if (message.indexOf('Skipping static resource') === 0) {
           return
         }
-        console.log(message)
+        console.log(message) // eslint-disable-line
       },
       minify: true,
-      navigateFallback: publicUrl + '/index.html',
+      navigateFallback: `${publicUrl}/index.html`,
       navigateFallbackWhitelist: [/^(?!\/__).*/],
       staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
     }),
